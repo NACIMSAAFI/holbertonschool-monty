@@ -14,6 +14,8 @@ typedef struct stack_s
     struct stack_s *next;
 } stack_t;
 
+extern stack_t *my_stack;
+
 typedef struct instruction_s
 {
     char *opcode;
@@ -22,7 +24,7 @@ typedef struct instruction_s
 
 
 void find_function(char *toke, char *value, int line_number, int format);
-void call_fun(void (*f)(), char *toke, char *value, int line_number, int format);
+void call_function(void (*f)(), char *toke, char *value, int line_number, int format);
 void push_stak(stack_t **stack, unsigned int line_number);
 void pall_stak(stack_t **stack, unsigned int line_number);
 void print_stak(stack_t **stack, unsigned int line_number);
