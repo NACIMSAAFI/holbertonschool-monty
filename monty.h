@@ -22,7 +22,8 @@ typedef struct instruction_s
     void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-
+void my_getline(FILE *fd);
+int tokenizer(char *buffer, int line_number, int format);
 void find_function(char *toke, char *value, int line_number, int format);
 void call_function(void (*f)(), char *toke, char *value, int line_number, int format);
 void push_stak(stack_t **stack, unsigned int line_number);

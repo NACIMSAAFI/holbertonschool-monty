@@ -28,6 +28,7 @@ void find_function(char *toke, char *value, int line_number, int format)
 
 void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, int line_number, int format)
 {
+     my_stack = NULL;
     if (strcmp("push", toke) == 0)
     {
         if (value == NULL)
@@ -42,4 +43,5 @@ void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value,
     {
         f(&my_stack, line_number);
     }
+    (void)format;
 }
