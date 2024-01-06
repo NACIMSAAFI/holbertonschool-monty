@@ -16,7 +16,7 @@ void my_getline(FILE *fd)
 int tokenizer(char *buffer, int line_number, int format)
 {
     char *toke, *value;
-    const char *delim = "\n ";
+    const char *delim = "$\n ";
 
     if (buffer == NULL)
     {
