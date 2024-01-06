@@ -36,7 +36,7 @@ extern stack_t *my_stack;
 
 int main(int argc, char *argv[]);
 void my_getline(FILE *fd);
-int tokenizer(char *buffer, int line_number, int format);
+void tokenizer(char *buffer, int line_number);
 void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, unsigned int line_number);
 void find_function(char *toke, char *value, unsigned int line_number);
 
