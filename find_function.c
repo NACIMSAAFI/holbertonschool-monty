@@ -24,6 +24,7 @@ void find_function(char *toke, char *value, unsigned int line_number)
     instruction_t f[] = {
         {"push", &push},
         {"pall", &pall},
+        {"pint", print_top},
         {NULL, NULL}};
 
     int i;
