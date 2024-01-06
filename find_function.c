@@ -1,5 +1,4 @@
 #include "monty.h"
-#include <string.h>
 
 void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, unsigned int line_number)
 {
