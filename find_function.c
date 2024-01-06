@@ -11,14 +11,16 @@ void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value,
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
+
         for (i = 0; value[i] != '\0'; i++)
         {
-        if (isdigit(value[i]) == 0)
-        {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
+            if (isdigit((unsigned char)value[i] == 0) && (i == 0 && value[i] != '-'))
+            {
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                exit(EXIT_FAILURE);
+            }
         }
-        }
+
         int int_value = atoi(value);
         f(&my_stack, int_value);
     }
