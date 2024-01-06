@@ -1,5 +1,7 @@
 #include "monty.h"
 
+stack_t *my_stack = NULL;
+
 int main(int argc, char *argv[])
 {
     FILE *file;
@@ -17,4 +19,6 @@ int main(int argc, char *argv[])
     }
     my_getline(file);
     fclose(file);
+
+    return 0;
 }

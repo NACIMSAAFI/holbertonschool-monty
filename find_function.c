@@ -1,34 +1,8 @@
 #include "monty.h"
+#include <string.h>
 
-void find_function(char *toke, char *value, int line_number, int format)
+void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, unsigned int line_number)
 {
-    int i;
-    int j;
-
-    instruction_t f[] = {
-        {"push", &push_stak},
-        {"pall", &pall_stak},
-        {"pint", &print_stak},
-        {"pop", &pop_top},
-        {"swap", &swap_stak},
-        {"add", &add_tow_top_elements},
-        {"nop", &do_nothing},
-        {NULL, NULL}};
-
-    for (i = 1, j = 0; f[j].opcode != NULL; i++)
-    {
-        if (strcmp(toke, f[j].opcode) == 0)
-        {
-            call_function(f[j].f, toke, value, line_number, format);
-            i = 0;
-        }
-        j++;
-    }
-}
-
-void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, int line_number, int format)
-{
-     my_stack = NULL;
     if (strcmp("push", toke) == 0)
     {
         if (value == NULL)
@@ -43,5 +17,25 @@ void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value,
     {
         f(&my_stack, line_number);
     }
-    (void)format;
+}
+
+void find_function(char *toke, char *value, unsigned int line_number)
+{
+    instruction_t f[] = {
+        {"push", &push},
+        {"pall", &pall},
+        {NULL, NULL}};
+
+    int i;
+    for (i = 0; f[i].opcode != NULL; i++)
+    {
+        if (strcmp(toke, f[i].opcode) == 0)
+        {
+            call_function(f[i].f, toke, value, line_number);
+            return;
+        }
+    }
+
+    fprintf(stderr, "L%d: unknown instruction %s\n", line_number, toke);
+    exit(EXIT_FAILURE);
 }
