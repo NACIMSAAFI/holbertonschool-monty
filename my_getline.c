@@ -15,7 +15,7 @@ void my_getline(FILE *fd)
 
 void tokenizer(char *buffer, int line_number)
 {
-    char *toke, *value;
+    char *opcode, *value;
     const char *delim = "$\n ";
 
     if (buffer == NULL)
@@ -23,7 +23,7 @@ void tokenizer(char *buffer, int line_number)
         fprintf(stderr, "Error: malloc failed\n");
         exit(EXIT_FAILURE);
     }
-    toke = strtok(buffer, delim);
+    opcode = strtok(buffer, delim);
     value = strtok(NULL, delim);
-    find_function(toke, value, line_number);
+    find_function(opcode, value, line_number);
 }
