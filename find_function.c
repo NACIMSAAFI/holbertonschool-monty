@@ -40,7 +40,7 @@ void find_function(char *opcode, char *value, unsigned int line_number)
     instruction_t f[] = {
         {"push", &push},
         {"pall", &pall},
-        {"pint", print_top},
+        {"pint", print},
         {NULL, NULL}};
 
     int i;
