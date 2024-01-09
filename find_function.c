@@ -1,58 +1,72 @@
 #include "monty.h"
 
-void call_function(void (*f)(stack_t **, unsigned int), char *opcode, char *value, unsigned int line_number)
+/**
+ * call_function - Calls the appropriate function based on the opcode
+ * @f: Function pointer
+ * @op: Opcode
+ * @val: Value (unused)
+ * @line: Line number
+ * @format: Format flag
+ */
+void call_function(void (*f)(stack_t **, unsigned int),
+char *op, char *val, int line, int format)
 {
-    int i, int_value;
+	stack_t *node;
+	int flag;
+	int i;
 
-    if (strcmp("push", opcode) == 0)
-    {
-        if (value == NULL)
-        {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            exit(EXIT_FAILURE);
-        }
-
-        for (i = 0; value[i] != '\0'; i++)
-        {
-            if (isdigit((unsigned char)value[i]) == 0 && (i == 0 && value[i] != '-'))
-            {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        int_value = atoi(value);
-        f(&my_stack, int_value);
-    }
-    else if (value != NULL)
-    {
-        fprintf(stderr, "L%d: usage: %s without a valid argument\n", line_number, opcode);
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        f(&my_stack, line_number);
-    }
+	flag = 1;
+	if (strcmp(op, "push") == 0)
+	{
+		if (val != NULL && val[0] == '-')
+		{
+			val = val + 1;
+			flag = -1;
+		}
+		if (val == NULL)
+			fprintf(stderr, "L%d: usage: push integer\n", line);
+		EXIT_FAILURE;
+		for (i = 0; val[i] != '\0'; i++)
+		{
+			if (isdigit(val[i]) == 0)
+				fprintf(stderr, "L%d: usage: push integer\n", line);
+			EXIT_FAILURE;
+		}
+		node = create_node(atoi(val) * flag);
+		if (format == 0)
+			f(&node, line);
+	}
+	else
+		f(&my_stack, line);
 }
 
-void find_function(char *opcode, char *value, unsigned int line_number)
+/**
+ * find_function - Finds and calls the function corresponding to the opcode
+ * @opcode: Opcode
+ * @value: Value (unused)
+ * @line_number: Line number
+ * @format: Format flag
+ */
+void find_function(char *opcode, char *value,
+unsigned int line_number, int format)
 {
-    instruction_t f[] = {
-        {"push", &push},
-        {"pall", &pall},
-        {"pint", print},
-        {NULL, NULL}};
+	instruction_t f[] = {
+		{"push", &push},
+		{"pall", &pall},
+		{"pint", print},
+		{NULL, NULL}};
 
-    int i;
-    for (i = 0; f[i].opcode != NULL; i++)
-    {
-        if (strcmp(opcode, f[i].opcode) == 0)
-        {
-            call_function(f[i].f, opcode, value, line_number);
-            return;
-        }
-    }
+	int i;
 
-    fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-    exit(EXIT_FAILURE);
+	for (i = 0; f[i].opcode != NULL; i++)
+	{
+		if (strcmp(opcode, f[i].opcode) == 0)
+		{
+			call_function(f[i].f, opcode, value, line_number, format);
+			return;
+		}
+	}
+
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+	exit(EXIT_FAILURE);
 }

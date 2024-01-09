@@ -9,16 +9,19 @@
 #include <stdarg.h>
 
 /**
- * struct stack_s - doubly linked list representation of a stack (or queue)
+ * struct stack_s - doubly linked list
+ * representation of a stack (or queue)
  * @n: integer
- * @prev: points to the previous element of the stack (or queue)
- * @next: points to the next element of the stack (or queue)
+ * @prev: points to the previous element
+ * of the stack (or queue)
+ * @next: points to the next element
+ * of the stack (or queue)
  */
 typedef struct stack_s
 {
-    int n;
-    struct stack_s *prev;
-    struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -28,18 +31,31 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-    char *opcode;
-    void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 extern stack_t *my_stack;
 
 int main(int argc, char *argv[]);
+stack_t *create_node(int n);
+void free_nodes(void);
 void my_getline(FILE *fd);
-void tokenizer(char *buffer, int line_number);
-void call_function(void (*f)(stack_t **, unsigned int), char *toke, char *value, unsigned int line_number);
-void find_function(char *toke, char *value, unsigned int line_number);
+int tokenizer(char *buffer, int line_number, int format);
 
+/**
+ * call_function - Calls the appropriate
+ * function based on the opcode
+ * @f: Function pointer
+ * @op: Opcode
+ * @val: Value (unused)
+ * @line: Line number
+ * @format: Format flag
+ */
+void call_function(void (*f)(stack_t **, unsigned int),
+char *op, char *val, int line, int format);
+void find_function(char *toke, char *value,
+unsigned int line_number, int format);
 void push(stack_t **stack, unsigned int value);
 void pall(stack_t **stack, unsigned int line_number);
 void print(stack_t **stack, unsigned int line_number);
