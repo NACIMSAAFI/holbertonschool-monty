@@ -60,3 +60,54 @@ void print(stack_t **stack, unsigned int line_number)
 
 	printf("%d\n", (*stack)->n);
 }
+
+/**
+ * pop - Removes the top element of the stack.
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Line number of the opcode
+ * @my_stack: Pointer to the stack
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	tmp = *stack;
+	*stack = (*stack)->next;
+	free(tmp);
+
+	if (*stack)
+		(*stack)->prev = NULL;
+}
+/**
+ * swap - Swaps the top two elements of the stack.
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Line number of the opcode
+ * @my_stack: Pointer to the stack
+ */
+void swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	tmp = (*stack)->next;
+	(*stack)->next = tmp->next;
+	(*stack)->prev = tmp;
+	tmp->prev = NULL;
+	tmp->next = *stack;
+
+	if ((*stack)->next)
+		(*stack)->next->prev = *stack;
+
+	*stack = tmp;
+}

@@ -45,5 +45,9 @@ void free_nodes(void);
 void push(stack_t **new_node, __attribute__((unused)) unsigned int ln);
 void pall(stack_t **stack, unsigned int line_number);
 void print(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */

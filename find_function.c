@@ -64,6 +64,10 @@ unsigned int line_number, int format)
 		{"push", &push},
 		{"pall", &pall},
 		{"pint", print},
+		{"pop", &pop},
+		{"swap", &swap},
+		{"add", &add},
+		{"nop", &nop},
 		{NULL, NULL}};
 
 	int i;
