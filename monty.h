@@ -9,13 +9,10 @@
 #include <stdarg.h>
 
 /**
- * struct stack_s - doubly linked list
- * representation of a stack (or queue)
- * @n: integer
- * @prev: points to the previous element
- * of the stack (or queue)
- * @next: points to the next element
- * of the stack (or queue)
+ * struct stack_s - Doubly linked list representation of a stack (or queue)
+ * @n: Integer value of the node
+ * @prev: Pointer to the previous element of the stack (or queue)
+ * @next: Pointer to the next element of the stack (or queue)
  */
 typedef struct stack_s
 {
@@ -25,9 +22,9 @@ typedef struct stack_s
 } stack_t;
 
 /**
- * struct instruction_s - opcode and its function
- * @opcode: the opcode
- * @f: function to handle the opcode
+ * struct instruction_s - Opcode and its associated function
+ * @opcode: The opcode
+ * @f: The function to perform the opcode
  */
 typedef struct instruction_s
 {
@@ -37,31 +34,16 @@ typedef struct instruction_s
 
 extern stack_t *my_stack;
 
-int main(int argc, char *argv[]);
-stack_t *create_node(int n);
-void free_nodes(void);
 void my_getline(FILE *fd);
 int tokenizer(char *buffer, int line_number, int format);
-
-/**
- * call_function - Calls the appropriate
- * function based on the opcode
- * @f: Function pointer
- * @op: Opcode
- * @val: Value (unused)
- * @line: Line number
- * @format: Format flag
- */
+void find_function(char *opcode, char *value,
+unsigned int line_number, int format);
 void call_function(void (*f)(stack_t **, unsigned int),
 char *op, char *val, int line, int format);
-void find_function(char *toke, char *value,
-unsigned int line_number, int format);
-void push(stack_t **stack, unsigned int value);
+stack_t *create_node(int n);
+void free_nodes(void);
+void push(stack_t **new_node, __attribute__((unused)) unsigned int ln);
 void pall(stack_t **stack, unsigned int line_number);
 void print(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */

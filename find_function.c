@@ -16,28 +16,38 @@ char *op, char *val, int line, int format)
 	int i;
 
 	flag = 1;
-	if (strcmp(op, "push") == 0)
+	if (!strcmp(op, "push"))
 	{
-		if (val != NULL && val[0] == '-')
+		if (val && val[0] == '-')
 		{
 			val = val + 1;
 			flag = -1;
 		}
-		if (val == NULL)
+
+		if (!val)
+		{
 			fprintf(stderr, "L%d: usage: push integer\n", line);
-		EXIT_FAILURE;
+			exit(EXIT_FAILURE);
+		}
+
 		for (i = 0; val[i] != '\0'; i++)
 		{
-			if (isdigit(val[i]) == 0)
+			if (!isdigit(val[i]))
+			{
 				fprintf(stderr, "L%d: usage: push integer\n", line);
-			EXIT_FAILURE;
+				exit(EXIT_FAILURE);
+			}
 		}
+
 		node = create_node(atoi(val) * flag);
+
 		if (format == 0)
 			f(&node, line);
 	}
 	else
+	{
 		f(&my_stack, line);
+	}
 }
 
 /**
@@ -58,9 +68,9 @@ unsigned int line_number, int format)
 
 	int i;
 
-	for (i = 0; f[i].opcode != NULL; i++)
+	for (i = 0; f[i].opcode; i++)
 	{
-		if (strcmp(opcode, f[i].opcode) == 0)
+		if (!strcmp(opcode, f[i].opcode))
 		{
 			call_function(f[i].f, opcode, value, line_number, format);
 			return;

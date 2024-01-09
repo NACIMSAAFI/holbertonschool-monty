@@ -3,13 +3,10 @@
 stack_t *my_stack;
 
 /**
- * main - Main function to start the Monty
- * interpreter
+ * main - Main function to start the Monty interpreter
  * @argc: Number of command-line arguments
- * @argv: Array of command-line
- * argument strings
- * Return: 0 on success,
- * EXIT_FAILURE on failure
+ * @argv: Array of command-line argument strings
+ * Return: 0 on success, EXIT_FAILURE on failure
  */
 int main(int argc, char *argv[])
 {
@@ -22,15 +19,18 @@ int main(int argc, char *argv[])
 	}
 
 	file = fopen(argv[1], "r");
-	if (file == NULL || argv[1] == NULL)
+	if (!file)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		perror("Error: Can't open file");
 		exit(EXIT_FAILURE);
 	}
+
 	my_getline(file);
 	fclose(file);
 
-	return (0);
+	free_nodes();
+
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -43,7 +43,7 @@ stack_t *create_node(int n)
 	stack_t *node;
 
 	node = malloc(sizeof(stack_t));
-	if (node == NULL)
+	if (!node)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
@@ -61,10 +61,10 @@ void free_nodes(void)
 {
 	stack_t *tmp;
 
-	if (my_stack == NULL)
+	if (!my_stack)
 		return;
 
-	while (my_stack != NULL)
+	while (my_stack)
 	{
 		tmp = my_stack;
 		my_stack = my_stack->next;

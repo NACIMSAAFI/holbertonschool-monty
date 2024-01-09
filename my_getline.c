@@ -30,17 +30,19 @@ int tokenizer(char *buffer, int line_number, int format)
 	const char *delim = "$\n ";
 	int i = 0;
 
-	if (buffer == NULL)
+	if (!buffer)
 	{
-		fprintf(stderr, "Error: malloc failed\n");
-			EXIT_FAILURE;
+		perror("Error: malloc failed");
+		return (EXIT_FAILURE);
 	}
+
 	while (isspace((unsigned char)buffer[i]))
 	{
 		i++;
 	}
+
 	opcode = strtok(buffer + i, delim);
-	if (opcode == NULL)
+	if (!opcode)
 		return (format);
 
 	value = strtok(NULL, delim);
